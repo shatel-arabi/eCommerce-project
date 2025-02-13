@@ -6,6 +6,7 @@ import Home from "../Component/Home/Home";
 import SignUp from "../Component/SignUp/SignUp";
 import Login from "../Component/Login/Login";
 import Order from "../Component/Orders/Order";
+import { productsAndCartLoader } from "../Loaders/productsAndCartLoader";
 
 const router = createBrowserRouter([
   {
@@ -40,8 +41,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/orders",
+        loader: productsAndCartLoader,
         element: <Order></Order>,
       },
+      
     ],
   },
 ]);

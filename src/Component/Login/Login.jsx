@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import banner from "../../assets/images/banner.jpg";
 import { Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "../../context/UserContext";
+
+
+
+
 
 const Login = () => {
+  const {signIn} = useContext(AuthContext)
+ // const [users, setUsers] = useState({});
+  //console.log(users);
+  
+const [error, setError] = useState("");
+  const handleSignIn=(event)=>{
+    //parameter event and preventDefault event stop the reload
+    event.preventDefault();
+    const form = event.target;
+    //const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    //console.log(email,password);
+
+
+     signIn(email, password )
+      .then((result) => {
+        const user = result.user;
+       console.log(user);
+       // setUsers(user);
+       })
+      .catch((error) =>{ 
+       // console.log(error);
+        setError(error.message);
+        
+      });
+    
+    
+     form.reset();
+     setError("");
+        
+        
+    
+   
+} ;
   return (
     <div className="hero bg-base-200 min-h-screen">
       <img className="w-full hidden md:block " src={banner} alt="" />
@@ -15,15 +56,17 @@ const Login = () => {
             your credentials to access your account.
           </p>
         </div>
+        
 
         <div className="md:w-96 card bg-base-100 shrink-0 shadow-2xl">
-          <form className="card-body">
+          <form onSubmit={handleSignIn} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
+                name ="email"
                 placeholder="email"
                 className="input input-bordered"
                 required
@@ -35,20 +78,24 @@ const Login = () => {
               </label>
               <input
                 type="password"
+                name ="password"
                 placeholder="password"
                 className="input input-bordered"
                 required
               />
+
+{error && <p className="text-red-500">Email or Password does not match</p>}
+
               <label className="label">
+                <button className="label-text-alt link link-hover">Forget password</button>
                 <Link to="/sign-up" className="label-text-alt link link-hover">
                   I have no account? Please Register now.
                 </Link>
               </label>
+             
             </div>
             <div className="form-control mt-4">
-              <button className="btn btn-warning hover:bg-orange-500">
-                Log In
-              </button>
+            <input type="submit" className="btn btn-warning hover:bg-orange-500 " value= "Log In "/>
             </div>
             <div className="divider"></div>
             <div className="form-control mt-0">
@@ -56,6 +103,7 @@ const Login = () => {
                 Continue with Google <i class="fa-brands fa-google"></i>
               </button>
             </div>
+            
           </form>
         </div>
       </div>

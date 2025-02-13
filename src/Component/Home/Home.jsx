@@ -3,7 +3,7 @@ import Header from "../Shared/Header/Header";
 import Footer from "../Shared/Footer/Footer";
 import Products from "./Products/Products";
 import Cart from "./Cart/Cart";
-import { addToDb } from "../../Utilities/fakeDb";
+import { addToDb, getStoredProduct } from "../../Utilities/fakeDb";
 //import { useState } from "react";
 
 const Home = () => {
@@ -34,9 +34,11 @@ const Home = () => {
     //newCart.push(clickedProduct);
   
     setCart(newCart);
-    addToDb(clickedProduct);
+    addToDb(clickedProduct.id);
 
     };
+    console.log(getStoredProduct());
+    
   
   return (
     <div className="mx-10 my-5">

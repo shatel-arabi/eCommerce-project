@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Cart = ({cart, clearCart}) => {
-  console.log(cart);
+ // console.log(cart);
   let total = 0;
   let shipping = 0;
   let quantity = 0;

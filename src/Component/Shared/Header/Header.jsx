@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../../assets/images/logo.png";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../context/UserContext";
 
 const Header = () => {
+  const {user, logOut} = useContext(AuthContext);
+  console.log(user);
+  
   const menuItems = (
     <React.Fragment>
       <li>
-        <Link to="/home" className="font-bold text-2xl">
+        <Link to="/home" className="font-bold text-xl">
           Home
         </Link>
       </li>
       <li>
-        <Link to="/about" className="font-bold text-2xl">
+        <Link to="/about" className="font-bold text-xl">
           About
         </Link>
       </li>
@@ -22,7 +26,7 @@ const Header = () => {
         {/* <NavLink to="/contact">Contact</NavLink> */}
       </li>
       <li>
-        <NavLink to="/sign-up" className="font-bold text-2xl">
+        <NavLink to="/sign-up" className="font-bold text-xl">
           Sign Up
         </NavLink>
       </li>
@@ -64,6 +68,35 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{menuItems}</ul>
       </div>
+      <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src={user?.photoURL ||"https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" }
+            
+            onError={(e) => (e.target.src = loading)} 
+            // Fallback to the loading image if error occurs
+             />
+        </div>
+      </div>
+   
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+        <li>
+          <a >
+            {user?.displayName}
+            {/* <span  className="badge"></span> */}
+          </a>
+        </li>
+        <li><a>{user?.email}</a></li>
+        <li>
+          {
+            user?.email? <a onClick={logOut}>Logout</a> : <Link to="/login">Sign In </Link>
+          }</li>
+      </ul>
+    </div>
     </div>
   );
 };
